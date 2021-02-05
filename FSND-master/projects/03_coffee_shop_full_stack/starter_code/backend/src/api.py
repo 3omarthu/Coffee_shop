@@ -12,11 +12,12 @@ app = Flask(__name__)
 setup_db(app)
 CORS(app)
 
+
 @app.after_request
 def after_request(response):
     header = response.headers
     header['Access-Control-Allow-Origin'] = '*'
-    header['Access-Control-Allow-Headers'] = 'Authorization, Content-Type, true'
+    header['Access-Control-Allow-Headers'] = 'Authorization,Content-Type,true'
     header['Access-Control-Allow-Methods'] = 'POST,GET,PUT,DELETE,PATCH,OPTIONS'
     return response
 
@@ -92,13 +93,13 @@ def edit_drink(token, drink_id):
         abort(400)
     else:
         drink.title = newTitle
-    
+
     drink.update()
     try:
         updatedDrink = Drink.query.filter_by(id=drink_id).first()
     except:
         abort(500)
-    
+
     return jsonify({
         'success': "true",
         'drinks': [updatedDrink.long()]
@@ -112,7 +113,7 @@ def delete_drink(token, drink_id):
         drink = Drink.query.filter_by(id=drink_id).one_or_none()
     except:
         abort(500)
-    
+
     if drink is None:
         abort(404)
 
@@ -172,4 +173,3 @@ def internal_server_error(error):
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True)
-    

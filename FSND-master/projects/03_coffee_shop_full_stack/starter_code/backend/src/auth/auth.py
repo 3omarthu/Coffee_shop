@@ -41,15 +41,18 @@ def get_token_auth_header():
     auth_header = request.headers['Authorization']
     if not auth_header:
         raise AuthError({"code": "authorization_header_missing",
-                        "description": "Authorization header is expected"}, 401)
+                        "description": "Authorization header is expected"},
+                        401)
     header_parts = auth_header.split()
 
     if len(header_parts) != 2:
         raise AuthError({"code": "invalid_header",
-                        "description": "Authorization header is malformed"}, 401)
+                        "description": "Authorization header is malformed"},
+                        401)
     elif header_parts[0].lower() != 'bearer':
         raise AuthError({"code": "invalid_header",
-                        "description": "Authorization header must start with" " Bearer"}, 401)
+                        "description": "Authorization header must start with" " Bearer"},
+                        401)
     return header_parts[1]
 
 '''
@@ -145,7 +148,7 @@ def verify_decode_jwt(token):
                 'code': 'invalid_header',
                 'description': 'Unable to parse authentication token.'
             }, 400)
-    
+
 
 '''
 @Done implement @requires_auth(permission) decorator method
