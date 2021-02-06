@@ -164,7 +164,7 @@ def internal_server_error(error):
 
 
 @app.errorhandler(401)
-def internal_server_error(error):
+def Unauthorized(error):
     return jsonify({
         "success": False,
         "error": 401,
